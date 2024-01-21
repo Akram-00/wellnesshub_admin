@@ -24,7 +24,7 @@ const LoginPage = () => {
         const data = await response.json();
         console.log("Admin Login Successfull", data);
         toast.success("Admin Login Successful");
-        window.location.href = "/page/addworkout";
+        window.location.href = "/pages/addworkout";
       } else {
         console.error("Admin Login Falied", response.statusText);
         toast.error("Failed to Login");
@@ -49,7 +49,7 @@ const LoginPage = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Sign up</button>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 };

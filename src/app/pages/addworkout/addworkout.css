@@ -1,0 +1,13 @@
+.exercise{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.exercise img{
+    aspect-ratio: 2/2;
+    width: 50%;
+    object-fit: contain;
+}
