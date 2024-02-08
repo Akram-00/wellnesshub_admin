@@ -18,7 +18,7 @@ interface Exercise {
   description: string;
   sets: number;
   reps: number;
-  imageUrl: string;
+  imageURL: string;
   imageFile: File | null;
 }
 
@@ -37,7 +37,7 @@ const page = () => {
     description: "",
     sets: 0,
     reps: 0,
-    imageUrl: "",
+    imageURL: "",
     imageFile: null,
   });
 
@@ -153,7 +153,7 @@ const page = () => {
       let tempImg = workout.exercises[i].imageFile;
       if (tempImg) {
         let imageurl = await uploadImage(tempImg);
-        workout.exercises[i].imageUrl = imageurl;
+        workout.exercises[i].imageURL = imageurl;
       }
     }
 
@@ -296,7 +296,7 @@ const page = () => {
               src={
                 exercise.imageFile
                   ? URL.createObjectURL(exercise.imageFile)
-                  : exercise.imageUrl
+                  : exercise.imageURL
               }
               alt=""
             />
