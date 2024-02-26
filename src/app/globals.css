@@ -1,31 +1,68 @@
-*{
-    margin:0;
-    padding:0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-input{
-    padding : 10px;
-    margin : 5px;
-    border : 1px solid #ccc;
+input {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
 }
 
-button{
-    padding: 10px;
-    margin : 5px;
-    border: 1px solid #ccc;
-    cursor: pointer;
+button {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 
-button:hover{
-    background-color: #1f1f1f;
-    color: #fff;
+button:hover {
+  background-color: #1f1f1f;
+  color: #fff;
 }
 
-.formpage{
-    background-color: #f5f5f5;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.formpage {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+:root {
+  --col1: #ffc20c;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+.mainhead1 {
+  -webkit-text-stroke: 1px var(--col1);
+  color: transparent;
+  font-size: 10rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.workouts-list{
+  height: 100vh;
+}
+
+.swiper-slide .swiper-slide-content h2 {
+  font-size: 1rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--col1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }

@@ -3,6 +3,7 @@ import React from "react";
 import "./addworkout.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import HomeBanner2 from "@/components/Navbar/HomeBanner2/HomeBanner2";
 
 interface Workout {
   name: string;
@@ -86,8 +87,9 @@ const page = () => {
       exercises: workout.exercises.filter((exercise, i) => i !== index),
     });
   };
-  const uploadImage = async (image: File) => {
+  const uploadImage = async (image: File, folderName: string) => {
     const formData = new FormData();
+    formData.append("folderName", folderName);
     formData.append("myimage", image);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/image-upload/uploadimage`,
@@ -142,17 +144,18 @@ const page = () => {
       return;
     }
 
+    const folderName = "Workouts";
     if (workout.imageFile) {
-      const workoutImageUrl = await uploadImage(workout.imageFile);
+      const workoutImageUrl = await uploadImage(workout.imageFile, folderName);
       if (workoutImageUrl) {
-        workout.imageURL = workoutImageUrl
+        workout.imageURL = workoutImageUrl;
       }
     }
 
     for (let i = 0; i < workout.exercises.length; i++) {
       let tempImg = workout.exercises[i].imageFile;
       if (tempImg) {
-        let imageurl = await uploadImage(tempImg);
+        let imageurl = await uploadImage(tempImg, folderName);
         workout.exercises[i].imageURL = imageurl;
       }
     }
@@ -186,127 +189,132 @@ const page = () => {
   };
 
   return (
-    <div className="formpage">
-      <h1 className="title">Add Workout</h1>
-      <input
-        type="text"
-        placeholder="workout name"
-        name="name"
-        value={workout.name}
-        onChange={handleWorkoutChange}
-      />
-      <textarea
-        placeholder="workout description"
-        name="description"
-        value={workout.description}
-        onChange={(e) => {
-          setWorkout({
-            ...workout,
-            description: e.target.value,
-          });
-        }}
-        rows={10}
-        cols={30}
-      />
-      <input
-        type="numbers"
-        placeholder="workout duration"
-        name="durationInMinutes"
-        value={workout.durationInMinutes}
-        onChange={handleWorkoutChange}
-      />
-      <input
-        type="file"
-        placeholder="workout Image"
-        name="workoutImage"
-        onChange={(e) => {
-          setWorkout({
-            ...workout,
-            imageFile: e.target.files![0],
-          });
-        }}
-      />
-      <div>
-        <h2 className="title">Add Exercise to workout</h2>
+    <div>
+      <div className="formpage">
+        <h1 className="title">Add Workout</h1>
         <input
           type="text"
-          placeholder="exercise name"
+          placeholder="workout name"
           name="name"
-          value={exercise.name}
-          onChange={handleExerciseChange}
+          value={workout.name}
+          onChange={handleWorkoutChange}
         />
         <textarea
-          placeholder="exercise description"
+          placeholder="workout description"
           name="description"
+          value={workout.description}
           onChange={(e) => {
-            setExercise({
-              ...exercise,
+            setWorkout({
+              ...workout,
               description: e.target.value,
             });
           }}
-          rows={5}
-          cols={5}
+          rows={10}
+          cols={30}
         />
-        <label htmlFor="sets">Sets</label>
         <input
-          type="number"
-          placeholder="Sets"
-          name="sets"
-          value={exercise.sets}
-          onChange={handleExerciseChange}
-        />
-        <label htmlFor="reps">Reps</label>
-        <input
-          type="number"
-          placeholder="Reps"
-          name="reps"
-          value={exercise.reps}
-          onChange={handleExerciseChange}
+          type="numbers"
+          placeholder="workout duration"
+          name="durationInMinutes"
+          value={workout.durationInMinutes}
+          onChange={handleWorkoutChange}
         />
         <input
           type="file"
-          placeholder="exercise Image"
-          name="exerciseImage"
+          placeholder="workout Image"
+          name="workoutImage"
           onChange={(e) => {
-            setExercise({
-              ...exercise,
+            setWorkout({
+              ...workout,
               imageFile: e.target.files![0],
             });
           }}
         />
+        <div>
+          <h2 className="title">Add Exercise to workout</h2>
+          <input
+            type="text"
+            placeholder="exercise name"
+            name="name"
+            value={exercise.name}
+            onChange={handleExerciseChange}
+          />
+          <textarea
+            placeholder="exercise description"
+            name="description"
+            onChange={(e) => {
+              setExercise({
+                ...exercise,
+                description: e.target.value,
+              });
+            }}
+            rows={5}
+            cols={5}
+          />
+          <label htmlFor="sets">Sets</label>
+          <input
+            type="number"
+            placeholder="Sets"
+            name="sets"
+            value={exercise.sets}
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="reps">Reps</label>
+          <input
+            type="number"
+            placeholder="Reps"
+            name="reps"
+            value={exercise.reps}
+            onChange={handleExerciseChange}
+          />
+          <input
+            type="file"
+            placeholder="exercise Image"
+            name="exerciseImage"
+            onChange={(e) => {
+              setExercise({
+                ...exercise,
+                imageFile: e.target.files![0],
+              });
+            }}
+          />
 
-        <button
-          onClick={(e) => {
-            addExerciseToWorkout();
-          }}
-        >
-          Add Exercise
-        </button>
-      </div>
-      <div className="exercises">
-        <h1 className="title">Exercises</h1>
-        {workout.exercises.map((exercise, index) => (
-          <div className="exercise" key={index}>
-            <h2>{exercise.name}</h2>
-            <p>{exercise.description}</p>
-            <p>{exercise.sets}</p>
-            <p>{exercise.reps}</p>
+          <button
+            onClick={(e) => {
+              addExerciseToWorkout();
+            }}
+          >
+            Add Exercise
+          </button>
+        </div>
+        <div className="exercises">
+          <h1 className="title">Exercises</h1>
+          {workout.exercises.map((exercise, index) => (
+            <div className="exercise" key={index}>
+              <h2>{exercise.name}</h2>
+              <p>{exercise.description}</p>
+              <p>{exercise.sets}</p>
+              <p>{exercise.reps}</p>
 
-            <img
-              src={
-                exercise.imageFile
-                  ? URL.createObjectURL(exercise.imageFile)
-                  : exercise.imageURL
-              }
-              alt=""
-            />
-            <button onClick={() => deleteExerciseFromWorkout(index)}>
-              Delete
-            </button>
-          </div>
-        ))}
+              <img
+                src={
+                  exercise.imageFile
+                    ? URL.createObjectURL(exercise.imageFile)
+                    : exercise.imageURL
+                }
+                alt=""
+              />
+              <button onClick={() => deleteExerciseFromWorkout(index)}>
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+        <button onClick={saveWorkout}>save workout</button>
       </div>
-      <button onClick={saveWorkout}>save workout</button>
+      <div>
+        <HomeBanner2 />
+      </div>
     </div>
   );
 };
