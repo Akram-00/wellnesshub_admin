@@ -34,7 +34,7 @@ const page = () => {
   }, []);
   return (
     <div className="workout">
-      <h1 className="mainhead1">{workout?.type} Day</h1>
+      <h1 className="mainhead1">{workout?.name} Day</h1>
       <div className="workout__exercises">
         {data?.exercises.map((item: any, index: number) => {
           return (

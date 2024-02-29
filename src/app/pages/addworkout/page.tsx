@@ -3,7 +3,7 @@ import React from "react";
 import "./addworkout.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import HomeBanner2 from "@/components/Navbar/HomeBanner2/HomeBanner2";
+import HomeBanner2 from "@/components/HomeBanner2/HomeBanner2";
 
 interface Workout {
   name: string;
@@ -213,7 +213,7 @@ const page = () => {
           cols={30}
         />
         <input
-          type="numbers"
+          type="number"
           placeholder="workout duration"
           name="durationInMinutes"
           value={workout.durationInMinutes}
