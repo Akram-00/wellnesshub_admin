@@ -33,6 +33,43 @@ const Navbar = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/admin/logout`,
+        {
+          method: "POST",
+          credentials: "include", // Include credentials (cookies)
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(anyDataYouWantToSend), // You can include a request body if needed
+        }
+      );
+
+      const data = await response.json()
+
+      if (data.ok) {
+        // Logout was successful
+        // Clear any client-side storage or state related to authentication if needed
+
+        // Reload the page
+        if (window.location.href === "/adminauth/login") {
+          window.location.reload();
+        } else {
+          window.location.href = "/adminauth/login";
+        }
+      } else {
+        // Logout failed, handle the error
+        console.error("Logout failed:", data.message);
+        // Handle logout failure, maybe show an error message to the user
+      }
+    } catch (error) {
+      console.error("Logout failed", error);
+      // Handle logout failure, maybe show an error message to the user
+    }
+  };
+
   useEffect(() => {
     checkAdminAuthenticated();
   }, []);
@@ -44,6 +81,7 @@ const Navbar = () => {
         {isAdminAuthenticated ? (
           <>
             <Link href="/pages/addworkout">Add Workout</Link>
+            <Link href="/adminauth/login" onClick={handleLogout}>Logout</Link>
           </>
         ) : (
           <>

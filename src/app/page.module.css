@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 54px);
+  flex-direction: column;
+  gap: 2rem;
+}
+
+h1.header {
+  word-spacing: 16px;
+  font-family: monospace;
+  letter-spacing: 6px;
+  text-align: center;
+}
+
+button.button a.signin{
+    text-decoration: none; 
+}
+button.button a.signin:hover{
+    color:white; 
+}
