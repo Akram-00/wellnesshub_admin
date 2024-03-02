@@ -4,7 +4,6 @@ import "./workoutPage.css";
 import { useSearchParams } from "next/navigation";
 
 const page = () => {
-  const [workout, setWorkout] = React.useState<any>(null);
   const [data, setData] = React.useState<any>(null);
   const searchParams = useSearchParams();
   const workoutid = searchParams.get("id");
@@ -34,7 +33,7 @@ const page = () => {
   }, []);
   return (
     <div className="workout">
-      <h1 className="mainhead1">{workout?.name} Day</h1>
+      <h1 className="mainhead1">{data?.name} Day</h1>
       <div className="workout__exercises">
         {data?.exercises.map((item: any, index: number) => {
           return (
@@ -50,7 +49,7 @@ const page = () => {
                 <img src={item.imageURL} alt="" />
               </div>
               <div className="workout__exercise__content">
-                <h2>{item.exercise}</h2>
+                <h2>{item.name}</h2>
                 <span>
                   {item.sets} sets X {item.reps} reps
                 </span>

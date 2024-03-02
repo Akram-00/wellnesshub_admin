@@ -1,7 +1,10 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./HomeBanner2.css";
-
+import useContextMenu from "@/hooks/useContextMenu";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import ContextMenu from "@/styles/ContextMenu";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,9 +13,35 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 
 const HomeBanner2 = () => {
-
-
+  const { clicked, setClicked, points, setPoints, workoutId, setWorkoutId } =
+    useContextMenu();
   const [data, setData] = React.useState<any[] | null>(null);
+
+  const handleDeleteClick = async () => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_API +
+          `/workoutplans/workouts/${workoutId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+      if (data.ok) {
+        console.log(data.message);
+        toast.success(data.message);
+        await getData();
+      } else {
+        console.error("Error in generating the workout data");
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      setData([]);
+    }
+  };
 
 
   const getData = async () => {
@@ -28,7 +57,7 @@ const HomeBanner2 = () => {
       const data = await response.json();
       if (data.ok) {
         setData(data.data);
-        console.log(data.data)
+        console.log(data.data);
       } else {
         console.error("Error in generating the workout data");
         setData([]);
@@ -80,6 +109,16 @@ const HomeBanner2 = () => {
                       style={{
                         backgroundImage: `url(${item.imageURL})`,
                       }}
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                        setClicked(true);
+                        setPoints({
+                          x: e.pageX,
+                          y: e.pageY,
+                        });
+                        setWorkoutId(item._id);
+                        console.log("Right Click", e.pageX, e.pageY);
+                      }}
                       onClick={() => {
                         window.location.href = `/workout?id=${item._id}`;
                       }}
@@ -93,6 +132,13 @@ const HomeBanner2 = () => {
                 );
               })}
           </Swiper>
+          {clicked && (
+            <ContextMenu top={points.y} left={points.x}>
+              <ul>
+                <li onClick={handleDeleteClick}>Delete</li>
+              </ul>
+            </ContextMenu>
+          )}
         </div>
       )}
     </>
