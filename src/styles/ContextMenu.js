@@ -1,11 +1,8 @@
 import styled, { css } from 'styled-components';
 
-interface ContextMenuProps {
-  top: number;
-  left: number;
-}
 
-const ContextMenu = styled.div<ContextMenuProps>`
+
+const ContextMenu = styled.div`
   position: absolute;
   width: 200px;
   z-index:100;

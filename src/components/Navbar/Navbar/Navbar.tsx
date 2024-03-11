@@ -80,7 +80,8 @@ const Navbar = () => {
       <div className="adminLinks">
         {isAdminAuthenticated ? (
           <>
-            <Link href="/pages/addworkout">Add Workout</Link>
+            <Link href="/pages/addworkout">WORKOUTS</Link>
+            <Link href="/pages/userData">USERS</Link>
             <Link href="/adminauth/login" onClick={handleLogout}>Logout</Link>
           </>
         ) : (
